@@ -1,0 +1,129 @@
+/* ================================
+   SECCIÓN INFORMACIÓN DE DESTINOS
+================================ */
+.info-destinos {
+  padding: 100px 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e6f7f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Envoltorio centrado nativo para balancear el contenido */
+.info-destinos .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center; /* Fuerza el centrado absoluto de todos los bloques internos */
+}
+
+/* Texto pequeño superior */
+.info-eyebrow {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: #0f766e;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Título principal */
+.info-title {
+  max-width: 900px; /* Previene que se estire demasiado en pantallas gigantes */
+  margin: 0 auto;
+  color: #0f4c81;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.2;
+}
+
+/* Palabra o país animado dinámicamente */
+.pais-animado {
+  display: inline-block;
+  margin-left: 8px;
+  color: #f97316;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 700;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  transform-origin: center;
+}
+
+/* Estado de salida de la animación */
+.pais-saliendo {
+  opacity: 0;
+  transform: translateY(-12px) scale(0.96);
+}
+
+/* Descripción inferior */
+.info-description {
+  max-width: 650px;
+  margin: 25px auto 0;
+  color: #475569;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Detalle decorativo inferior (Líneas y puntos) */
+.info-accent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.info-accent span {
+  display: block; /* Asegura su correcto renderizado físico */
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f766e;
+}
+
+.info-accent span:nth-child(2) {
+  width: 32px;
+  border-radius: 10px;
+  background: #f97316;
+}
+
+/* ================================
+   ADAPTACIÓN A MÓVILES (RESPONSIVE)
+================================ */
+@media (max-width: 576px) {
+  .info-destinos {
+    padding: 70px 0;
+  }
+
+  .info-destinos .container {
+    padding: 0 18px;
+  }
+
+  .info-title {
+    letter-spacing: -1px;
+    line-height: 1.25;
+  }
+
+  .pais-animado {
+    margin-left: 3px;
+  }
+
+  .info-description {
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido del sistema operativo */
+@media (prefers-reduced-motion: reduce) {
+  .pais-animado {
+    transition: none;
+  }
+}
