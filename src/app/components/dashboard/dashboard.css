@@ -1,0 +1,255 @@
+/* ================================
+   ESTRUCTURA GENERAL
+================================ */
+
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e6f7f5 100%);
+  color: #0f172a;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 45px 20px 70px;
+}
+
+/* ================================
+   BARRA SUPERIOR
+================================ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px max(calc((100% - 1160px) / 2), 25px);
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 76, 129, 0.1);
+  box-shadow: 0 4px 15px rgba(15, 76, 129, 0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0f4c81;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #e6f7f5;
+  border-radius: 12px;
+  font-size: 1.3rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0f4c81;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ================================
+   BIENVENIDA
+================================ */
+
+.welcome-section {
+  margin-bottom: 35px;
+}
+
+.welcome-badge {
+  display: inline-block;
+  margin-bottom: 15px;
+  padding: 7px 13px;
+  border-radius: 50px;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome-section h1 {
+  margin: 0 0 12px;
+  color: #0f4c81;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.welcome-section p {
+  max-width: 650px;
+  margin: 0;
+  color: #475569;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* ================================
+   NAVEGACIÓN
+================================ */
+
+.dashboard-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.dashboard-nav button {
+  padding: 13px 20px;
+  border: 1px solid rgba(15, 76, 129, 0.15);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-nav button:hover {
+  border-color: #0f4c81;
+  color: #0f4c81;
+  transform: translateY(-2px);
+}
+
+.dashboard-nav button.active {
+  border-color: #0f4c81;
+  background: #0f4c81;
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(15, 76, 129, 0.18);
+}
+
+/* ================================
+   CONTENEDOR DE SECCIONES
+================================ */
+
+.content-card {
+  min-height: 350px;
+  padding: 30px;
+  border: 1px solid rgba(15, 76, 129, 0.08);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(15, 76, 129, 0.07);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #e6f7f5;
+  font-size: 1.6rem;
+}
+
+.section-heading h2 {
+  margin: 0 0 6px;
+  color: #0f4c81;
+  font-size: 1.5rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* ================================
+   CONTENIDO PROVISIONAL
+================================ */
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+  padding: 25px;
+  border: 2px dashed rgba(15, 76, 129, 0.18);
+  border-radius: 14px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.placeholder p {
+  margin: 0 0 10px;
+  color: #0f4c81;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.placeholder span {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 650px) {
+  .main-content {
+    padding: 30px 15px 50px;
+  }
+
+  .topbar {
+    padding: 15px;
+  }
+
+  .brand {
+    font-size: 1.05rem;
+  }
+
+  .user-info {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-nav {
+    flex-direction: column;
+  }
+
+  .dashboard-nav button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .content-card {
+    padding: 20px 15px;
+  }
+
+  .section-heading h2 {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,27 @@
+<section class="info-destinos">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-10">
+        <span class="info-eyebrow"> DESCUBRE EL MUNDO </span>
+
+        <h2 class="info-title">
+          Conoce
+          <span class="pais-animado" [class.pais-saliendo]="animando()">
+            {{ paises[indicePais()] }}
+          </span>
+        </h2>
+
+        <p class="info-description">
+          Nuevos destinos, culturas fascinantes y experiencias inolvidables te esperan. Empieza a
+          planear tu próxima aventura.
+        </p>
+
+        <div class="info-accent" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

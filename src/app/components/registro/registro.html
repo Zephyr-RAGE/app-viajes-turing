@@ -1,0 +1,167 @@
+<div class="register-page">
+  <div class="row g-0 flex-grow-1">
+    <!-- Panel Izquierdo (Cover de Presentación) -->
+    <div class="col-lg-6 register-cover">
+      <div>
+        <span class="badge-travel mb-4"> ✈️ Explora el mundo </span>
+      </div>
+
+      <div class="my-auto">
+        <h1 class="display-4">Tu próxima aventura comienza aquí</h1>
+        <p class="lead">
+          Crea tu cuenta para gestionar tus reservas, descubrir destinos increíbles y personalizar
+          tus próximos viajes.
+        </p>
+      </div>
+
+      <div class="small opacity-75">© 2026 Agencia de Viajes. Todos los derechos reservados.</div>
+    </div>
+
+    <!-- Panel Derecho (Formulario de Registro) -->
+    <div class="col-lg-6">
+      <div class="register-card">
+        <div class="text-center mb-4">
+          <h2 class="register-title">¡Únete a nosotros!</h2>
+          <p class="text-muted">Ingresa tus datos para registrar una nueva cuenta.</p>
+        </div>
+
+        @if (errorMessage()) {
+          <div class="alert-danger mb-4" role="alert">⚠️ {{ errorMessage() }}</div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- Input de Nombre Completo -->
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre Completo</label>
+            <div class="input-group">
+              <span class="input-group-text">👤</span>
+              <input
+                type="text"
+                id="nombre"
+                formControlName="nombre"
+                class="form-control"
+                placeholder="Juan Pérez"
+                [class.is-invalid]="
+                  form.controls['nombre'].touched && form.controls['nombre'].invalid
+                "
+              />
+            </div>
+
+            @if (form.controls['nombre'].touched && form.controls['nombre'].invalid) {
+              <div class="text-danger small mt-1">
+                @if (form.controls['nombre'].errors?.['required']) {
+                  El nombre completo es requerido.
+                } @else if (form.controls['nombre'].errors?.['minlength']) {
+                  Debe tener al menos 3 caracteres.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Input de Correo -->
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <div class="input-group">
+              <span class="input-group-text">✉️</span>
+              <input
+                type="email"
+                id="correo"
+                formControlName="correo"
+                class="form-control"
+                placeholder="ejemplo@correo.com"
+                [class.is-invalid]="
+                  form.controls['correo'].touched && form.controls['correo'].invalid
+                "
+              />
+            </div>
+
+            @if (form.controls['correo'].touched && form.controls['correo'].invalid) {
+              <div class="text-danger small mt-1">
+                @if (form.controls['correo'].errors?.['required']) {
+                  El correo electrónico es requerido.
+                } @else if (form.controls['correo'].errors?.['email']) {
+                  Ingresa un formato de correo válido.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Input de Contraseña -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <div class="input-group password-group">
+              <span class="input-group-text">🔒</span>
+              <input
+                [type]="hidePassword() ? 'password' : 'text'"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="••••••••"
+                [class.is-invalid]="
+                  form.controls['password'].touched && form.controls['password'].invalid
+                "
+              />
+              <button
+                type="button"
+                class="btn-toggle-password"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+              >
+                {{ hidePassword() ? '👁️' : '🙈' }}
+              </button>
+            </div>
+
+            @if (form.controls['password'].touched && form.controls['password'].invalid) {
+              <div class="text-danger small mt-1">
+                @if (form.controls['password'].errors?.['required']) {
+                  La contraseña es requerida.
+                } @else if (form.controls['password'].errors?.['minlength']) {
+                  Debe tener al menos 6 caracteres.
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Checkbox de Términos -->
+          <div class="form-check mb-4">
+            <input
+              type="checkbox"
+              id="aceptaTerminos"
+              formControlName="aceptaTerminos"
+              class="form-check-input"
+              [class.is-invalid]="
+                form.controls['aceptaTerminos'].touched && form.controls['aceptaTerminos'].invalid
+              "
+            />
+            <label class="form-check-label small text-muted" for="aceptaTerminos">
+              Acepto los términos y condiciones de viaje.
+            </label>
+            @if (
+              form.controls['aceptaTerminos'].touched && form.controls['aceptaTerminos'].invalid
+            ) {
+              <div class="text-danger small mt-1">Debes aceptar los términos para continuar.</div>
+            }
+          </div>
+
+          <!-- Botón de Submit con estado de carga -->
+          <button type="submit" class="btn-travel mb-3" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <span class="spinner-border-sm" aria-hidden="true"></span>
+              Cargando...
+            } @else {
+              Registrarme
+            }
+          </button>
+
+          <!-- Enlace hacia Login -->
+          <div class="text-center">
+            <p class="text-muted">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="login-link">Inicia sesión aquí</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
