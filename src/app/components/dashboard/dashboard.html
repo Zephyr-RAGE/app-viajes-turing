@@ -1,0 +1,89 @@
+<div class="dashboard">
+  <!-- BARRA SUPERIOR -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">✈</span>
+      <span>Viajes Turing</span>
+    </div>
+
+    <div class="user-info">
+      <span class="user-avatar">U</span>
+      <span>Mi cuenta</span>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <section class="welcome-section">
+      <span class="welcome-badge">PANEL DE VIAJERO</span>
+      <h1>Explora el mundo a tu manera.</h1>
+      <p>
+        Consulta monedas, conoce el clima de tu próximo destino y mantén un registro de tus
+        búsquedas.
+      </p>
+    </section>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="dashboard-nav">
+      <button [class.active]="activeSection() === 'monedas'" (click)="changeSection('monedas')">
+        💱 Conversión de monedas
+      </button>
+
+      <button [class.active]="activeSection() === 'clima'" (click)="changeSection('clima')">
+        ☀️ Clima
+      </button>
+
+      <button [class.active]="activeSection() === 'historial'" (click)="changeSection('historial')">
+        📋 Mi historial
+      </button>
+    </nav>
+
+    <!-- CONTENIDO DINÁMICO -->
+    <section class="content-card">
+      @if (activeSection() === 'monedas') {
+        <div class="section-heading">
+          <span class="section-icon">💱</span>
+          <div>
+            <h2>Conversión de monedas</h2>
+            <p>Consulta el valor de tu dinero en otros países.</p>
+          </div>
+        </div>
+
+        <div class="placeholder">
+          <p>Formulario de conversión de monedas</p>
+          <span>Próximamente conectaremos el servicio de divisas.</span>
+        </div>
+      }
+
+      @if (activeSection() === 'clima') {
+        <div class="section-heading">
+          <span class="section-icon">☀️</span>
+          <div>
+            <h2>Clima de tu destino</h2>
+            <p>Consulta las condiciones meteorológicas.</p>
+          </div>
+        </div>
+
+        <div class="placeholder">
+          <p>Consulta meteorológica</p>
+          <span>Próximamente conectaremos la API del clima.</span>
+        </div>
+      }
+
+      @if (activeSection() === 'historial') {
+        <div class="section-heading">
+          <span class="section-icon">📋</span>
+          <div>
+            <h2>Mi historial</h2>
+            <p>Revisa tus consultas anteriores.</p>
+          </div>
+        </div>
+
+        <div class="placeholder">
+          <p>Historial de consultas</p>
+          <span>Próximamente conectaremos el historial del backend.</span>
+        </div>
+      }
+    </section>
+  </main>
+</div>
