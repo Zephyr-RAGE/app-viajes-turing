@@ -9,6 +9,8 @@
     <div class="user-info">
       <span class="user-avatar">U</span>
       <span>Mi cuenta</span>
+
+      <button type="button" class="logout-button" (click)="cerrarSesion()">Cerrar sesión</button>
     </div>
   </header>
 
@@ -47,11 +49,119 @@
             <h2>Conversión de monedas</h2>
             <p>Consulta el valor de tu dinero en otros países.</p>
           </div>
+
+          <div class="conversion-actions">
+            <button type="button" (click)="convertir()" [disabled]="isLoadingConversion()">
+              @if (isLoadingConversion()) {
+                Consultando...
+              } @else {
+                Convertir
+              }
+            </button>
+          </div>
+
+          @if (errorConversion()) {
+            <p class="error-message">
+              {{ errorConversion() }}
+            </p>
+          }
+
+          @if (resultadoConversion(); as resultado) {
+            <div class="conversion-result">
+              <h3>Resultado de tu conversión</h3>
+
+              <p>
+                <strong>Presupuesto:</strong>
+                {{ resultado.presupuesto_cop }} COP
+              </p>
+
+              <p>
+                <strong>Importe convertido:</strong>
+                {{ resultado.valor_convertido }}
+                {{ monedaSeleccionada()?.codigo }}
+              </p>
+
+              <p>
+                <strong>Tasa de cambio:</strong>
+                {{ resultado.tasa }}
+              </p>
+
+              <p>
+                <strong>Clima:</strong>
+                {{ resultado.clima }}
+              </p>
+
+              <p>
+                <strong>Fecha:</strong>
+                {{ resultado.fecha | date: 'medium' }}
+              </p>
+            </div>
+          }
         </div>
 
-        <div class="placeholder">
-          <p>Formulario de conversión de monedas</p>
-          <span>Próximamente conectaremos el servicio de divisas.</span>
+        <div class="conversion-form">
+          <!-- SELECTOR DE PAÍSES -->
+          <div class="form-group">
+            <label for="pais">Selecciona tu destino</label>
+
+            @if (isLoadingPaises()) {
+              <p>Cargando países...</p>
+            } @else if (errorPaises()) {
+              <p class="error-message">{{ errorPaises() }}</p>
+            } @else {
+              <select id="pais" (change)="onCountryChange($event)">
+                <option value="">Selecciona un país</option>
+
+                @for (pais of paises(); track pais.id) {
+                  <option [value]="pais.id">
+                    {{ pais.nombre }}
+                  </option>
+                }
+              </select>
+            }
+          </div>
+
+          <!-- SELECTOR DE CIUDADES -->
+          <div class="form-group">
+            <label for="ciudad">Selecciona una ciudad</label>
+
+            @if (!selectedPaisId()) {
+              <select id="ciudad" disabled>
+                <option value="">Primero selecciona un país</option>
+              </select>
+            } @else if (isLoadingCiudades()) {
+              <select id="ciudad" disabled>
+                <option value="">Cargando ciudades...</option>
+              </select>
+            } @else if (errorCiudades()) {
+              <p class="error-message">{{ errorCiudades() }}</p>
+            } @else {
+              <select id="ciudad" (change)="onCityChange($event)">
+                <option value="">Selecciona una ciudad</option>
+
+                @for (ciudad of ciudades(); track ciudad.id) {
+                  <option [value]="ciudad.id">
+                    {{ ciudad.nombre }}
+                  </option>
+                }
+              </select>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="presupuesto">¿Cuál es tu presupuesto?</label>
+
+            <input
+              type="number"
+              id="presupuesto"
+              min="0"
+              step="0.01"
+              placeholder="Ej. 1500000"
+              (input)="onBudgetChange($event)"
+            />
+
+            <small class="field-hint"> Ingresa tu presupuesto en pesos colombianos (COP). </small>
+          </div>
         </div>
       }
 
@@ -64,9 +174,36 @@
           </div>
         </div>
 
-        <div class="placeholder">
-          <p>Consulta meteorológica</p>
-          <span>Próximamente conectaremos la API del clima.</span>
+        <div class="weather-container">
+          @if (!selectedCiudadId()) {
+            <p>Primero selecciona un destino en Conversión de monedas.</p>
+          }
+
+          <button
+            type="button"
+            (click)="consultarClima()"
+            [disabled]="isLoadingClima() || !selectedCiudadId()"
+          >
+            @if (isLoadingClima()) {
+              Consultando clima...
+            } @else {
+              Consultar clima
+            }
+          </button>
+
+          @if (errorClima()) {
+            <p class="error-message">{{ errorClima() }}</p>
+          }
+
+          @if (clima(); as resultado) {
+            <div class="weather-result">
+              <h3>{{ resultado.ciudad }}</h3>
+
+              <p class="temperature">{{ resultado.temperatura }} {{ resultado.unidad }}</p>
+
+              <p>{{ resultado.descripcion }}</p>
+            </div>
+          }
         </div>
       }
 
@@ -79,9 +216,57 @@
           </div>
         </div>
 
-        <div class="placeholder">
-          <p>Historial de consultas</p>
-          <span>Próximamente conectaremos el historial del backend.</span>
+        <div class="history-container">
+          @if (isLoadingHistorial()) {
+            <p>Cargando tu historial...</p>
+          } @else if (errorHistorial()) {
+            <p class="error-message">{{ errorHistorial() }}</p>
+          } @else if (historial().length === 0) {
+            <div class="placeholder">
+              <p>Aún no tienes consultas guardadas.</p>
+              <span>Realiza una conversión para comenzar tu historial.</span>
+            </div>
+          } @else {
+            <div class="history-list">
+              @for (registro of historial(); track registro.id) {
+                <article class="history-item">
+                  <div class="history-info">
+                    <h3>Consulta #{{ registro.id }}</h3>
+
+                    <p>
+                      <strong>Ciudad ID:</strong>
+                      {{ registro.ciudad_id }}
+                    </p>
+
+                    <p>
+                      <strong>Presupuesto:</strong>
+                      {{ registro.presupuesto_cop }} COP
+                    </p>
+
+                    <p>
+                      <strong>Importe convertido:</strong>
+                      {{ registro.valor_convertido }}
+                      {{ registro.tasa }}
+                    </p>
+
+                    <p>
+                      <strong>Clima:</strong>
+                      {{ registro.clima }}
+                    </p>
+
+                    <p>
+                      <strong>Fecha:</strong>
+                      {{ registro.fecha | date: 'medium' }}
+                    </p>
+                  </div>
+
+                  <div class="history-actions">
+                    <button type="button" (click)="eliminarHistorial(registro.id)">Eliminar</button>
+                  </div>
+                </article>
+              }
+            </div>
+          }
         </div>
       }
     </section>

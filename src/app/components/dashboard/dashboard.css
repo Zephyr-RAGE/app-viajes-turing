@@ -216,6 +216,138 @@
 }
 
 /* ================================
+   FORMULARIO DE CONVERSIÓN
+================================ */
+
+.conversion-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.form-group label {
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.form-group select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.95rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.form-group select:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ================================
+   VISTA PREVIA DE MONEDA
+================================ */
+
+.currency-preview {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 65px;
+  padding: 14px 18px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 12px;
+  background: #f0fdfa;
+}
+
+.currency-preview > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.currency-preview div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.currency-preview strong {
+  color: #0f4c81;
+  font-size: 0.95rem;
+}
+
+.currency-preview small {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.form-group > p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.form-group .error-message {
+  color: #dc2626;
+}
+
+.logout-button {
+  padding: 9px 16px;
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.logout-button:active {
+  transform: scale(0.97);
+}
+
+.logout-button:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 3px;
+}
+
+/* ================================
    RESPONSIVE
 ================================ */
 
